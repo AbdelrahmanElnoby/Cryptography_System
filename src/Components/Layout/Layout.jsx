@@ -10,10 +10,9 @@ export default function Layout() {
 
 		<Navbar />
 
-		<div className="container mt-4 py-12 ">
-
+		<main style={{ marginTop: '80px', minHeight: 'calc(100vh - 80px)' }}>
 			<Outlet></Outlet>
-		</div>
+		</main>
 
 		<Footer />
 

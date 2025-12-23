@@ -1,11 +1,19 @@
 import React from 'react'
-import style from './Footer.module.css'
+import styles from './Footer.module.css'
 
 export default function Footer() {
   
-  return <>
-
-    <h2 className='fixed inset-x-0 bottom-0 text-center'>Footer</h2>
-  
-  </>
+  return (
+    <footer className={styles.footer}>
+      <div className={styles.content}>
+        <div className={styles.info}>
+          <i className="fas fa-shield-alt"></i>
+          <span>Cryptography System</span>
+        </div>
+        <div className={styles.copyright}>
+          <span>© {new Date().getFullYear()} All rights reserved</span>
+        </div>
+      </div>
+    </footer>
+  )
 }
