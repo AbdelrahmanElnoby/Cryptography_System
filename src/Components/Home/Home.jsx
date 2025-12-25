@@ -1,12 +1,49 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { useScroll } from '../../context/ScrollContext';
 import styles from './Home.module.css';
+import GuideSection from './GuideSection';
+import AboutSection from './AboutSection';
 
 const Home = () => {
+  const { setActiveSection } = useScroll();
+  const homeRef = useRef(null);
+
+  useEffect(() => {
+    // Set initial active section to home
+    setActiveSection('home');
+  }, [setActiveSection]);
+
+  useEffect(() => {
+    const observerOptions = {
+      root: null,
+      rootMargin: '-20% 0px -60% 0px',
+      threshold: 0
+    };
+
+    const observerCallback = (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveSection('home');
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+    if (homeRef.current) {
+      observer.observe(homeRef.current);
+    }
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [setActiveSection]);
+
   return (
     <div className={styles.container}>
       {/* Hero Section */}
-      <section className={styles.hero}>
+      <section id="home" ref={homeRef} className={styles.hero}>
         <div className={styles.heroContent}>
           <div className={styles.heroIcon}>
             <i className="fas fa-shield-alt"></i>
@@ -117,6 +154,12 @@ const Home = () => {
           </Link>
         </div>
       </section>
+
+      {/* Guide Section */}
+      <GuideSection />
+
+      {/* About Section */}
+      <AboutSection />
     </div>
   );
 };

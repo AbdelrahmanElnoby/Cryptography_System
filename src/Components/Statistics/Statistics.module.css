@@ -392,6 +392,328 @@
   z-index: 10;
 }
 
+/* Algorithm Selector */
+.algorithmSelector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+}
+
+.algorithmButton {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.875rem 1.75rem;
+  background: var(--black-light);
+  border: 2px solid var(--gray-medium);
+  border-radius: 0.75rem;
+  color: var(--text-secondary);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  position: relative;
+  overflow: hidden;
+}
+
+.algorithmButton::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: var(--gradient-primary);
+  transition: left 0.3s;
+  z-index: 0;
+}
+
+.algorithmButton:hover::before {
+  left: 0;
+}
+
+.algorithmButton:hover {
+  border-color: var(--neon-red);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
+.algorithmButton.active {
+  background: var(--gradient-primary);
+  border-color: var(--neon-red);
+  color: var(--black);
+  box-shadow: var(--shadow-lg);
+}
+
+.algorithmButton.active::before {
+  display: none;
+}
+
+.algorithmButton i {
+  position: relative;
+  z-index: 1;
+}
+
+.algorithmButton span {
+  position: relative;
+  z-index: 1;
+}
+
+/* Summary Cards */
+.summaryCards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.summaryCard {
+  background: var(--black-light);
+  border: 2px solid var(--gray-medium);
+  border-radius: 1rem;
+  padding: 1.75rem;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  transition: all var(--transition-base);
+  position: relative;
+  overflow: hidden;
+}
+
+.summaryCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--gradient-primary);
+  transform: scaleX(0);
+  transition: transform var(--transition-base);
+}
+
+.summaryCard:hover::before {
+  transform: scaleX(1);
+}
+
+.summaryCard:hover {
+  border-color: var(--neon-red);
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-3px);
+}
+
+.summaryIcon {
+  width: 3.5rem;
+  height: 3.5rem;
+  background: var(--black);
+  border: 2px solid var(--neon-red);
+  border-radius: 0.875rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: var(--shadow-neon);
+}
+
+.summaryIcon i {
+  font-size: 1.5rem;
+  color: var(--neon-red);
+  text-shadow: 0 0 15px var(--neon-red-glow);
+}
+
+.summaryContent {
+  flex: 1;
+  min-width: 0;
+}
+
+.summaryLabel {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.summaryValue {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.summaryUnit {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+/* Comparison Card */
+.comparisonCard {
+  background: var(--black-light);
+  border-radius: 1.5rem;
+  padding: 2.5rem;
+  box-shadow: var(--shadow-xl), 0 0 30px rgba(255, 7, 58, 0.1);
+  border: 2px solid var(--gray-medium);
+  transition: all var(--transition-base);
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 2.5rem;
+}
+
+.comparisonCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--gradient-primary);
+  transform: scaleX(0);
+  transition: transform var(--transition-base);
+}
+
+.comparisonCard:hover::before {
+  transform: scaleX(1);
+}
+
+.comparisonCard:hover {
+  border-color: var(--neon-red);
+  box-shadow: var(--shadow-xl), var(--shadow-neon);
+}
+
+.comparisonGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.comparisonItem {
+  background: var(--black);
+  border: 2px solid var(--gray-medium);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  transition: all var(--transition-base);
+  position: relative;
+  overflow: hidden;
+}
+
+.comparisonItem::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--gradient-primary);
+  transform: scaleX(0);
+  transition: transform var(--transition-base);
+}
+
+.comparisonItem:hover::before {
+  transform: scaleX(1);
+}
+
+.comparisonItem:hover {
+  border-color: var(--neon-red);
+  box-shadow: 0 0 20px rgba(255, 7, 58, 0.2);
+  transform: translateY(-3px);
+}
+
+.comparisonHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--gray-medium);
+}
+
+.comparisonHeader i {
+  font-size: 1.5rem;
+  color: var(--neon-red);
+  text-shadow: 0 0 10px var(--neon-red-glow);
+}
+
+.comparisonAlgo {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.comparisonStats {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.comparisonStat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.comparisonLabel {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.comparisonValue {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Empty State */
+.emptyState {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: var(--black-light);
+  border-radius: 1.5rem;
+  border: 2px dashed var(--gray-medium);
+}
+
+.emptyIcon {
+  width: 5rem;
+  height: 5rem;
+  background: var(--black);
+  border: 2px solid var(--gray-medium);
+  border-radius: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 2rem;
+}
+
+.emptyIcon i {
+  font-size: 2.5rem;
+  color: var(--text-secondary);
+}
+
+.emptyState h3 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+.emptyState p {
+  font-size: 1.125rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
 @media (max-width: 768px) {
   .container {
     padding: 2rem 1rem;
@@ -402,7 +724,8 @@
   }
 
   .analysisCard,
-  .chartCard {
+  .chartCard,
+  .comparisonCard {
     padding: 2rem;
   }
 
@@ -428,5 +751,46 @@
 
   .barWrapper {
     height: 250px;
+  }
+
+  .algorithmSelector {
+    gap: 0.75rem;
+  }
+
+  .algorithmButton {
+    padding: 0.75rem 1.25rem;
+    font-size: 0.9375rem;
+  }
+
+  .summaryCards {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .summaryCard {
+    padding: 1.25rem;
+  }
+
+  .summaryIcon {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .summaryIcon i {
+    font-size: 1.25rem;
+  }
+
+  .summaryValue {
+    font-size: 1.5rem;
+  }
+
+  .comparisonGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .summaryCards {
+    grid-template-columns: 1fr;
   }
 }

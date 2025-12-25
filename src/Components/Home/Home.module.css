@@ -227,8 +227,8 @@
 
 /* Features Section */
 .features {
-  max-width: 1400px;
-  margin: 0 auto;
+  width: 100%;
+  margin: 0;
   padding: 6rem 2rem;
   background: var(--black-light);
   position: relative;
@@ -597,5 +597,49 @@
   .secondaryButton {
     padding: 1rem 1.75rem;
     font-size: 0.9375rem;
+  }
+}
+
+/* Section Wrapper for embedded Guide and About */
+.sectionWrapper {
+  width: 100%;
+  padding: 6rem 0;
+  position: relative;
+  border-top: 2px solid var(--gray-medium);
+  margin-top: 4rem;
+  background: var(--black);
+}
+
+.sectionWrapper:first-of-type {
+  border-top: 2px solid var(--gray-medium);
+  margin-top: 4rem;
+}
+
+.sectionWrapper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 2px;
+  background: var(--gradient-primary);
+  opacity: 0.5;
+}
+
+.sectionContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .sectionWrapper {
+    padding: 4rem 0;
+    margin-top: 3rem;
+  }
+
+  .sectionContainer {
+    padding: 0 1rem;
   }
 }

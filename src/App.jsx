@@ -11,6 +11,7 @@ import About from './Components/About/About.jsx'
 import Guide from './Components/Guide/Guide.jsx'
 import NotFound from './Components/NotFound/NotFound.jsx'
 import { CryptoProvider } from './context/CryptoContext.jsx'
+import { ScrollProvider } from './context/ScrollContext.jsx'
 
 
 let routers = createBrowserRouter([{
@@ -31,7 +32,9 @@ function App() {
   return <>
 
     <CryptoProvider>
-      <RouterProvider router={routers}></RouterProvider>
+      <ScrollProvider>
+        <RouterProvider router={routers}></RouterProvider>
+      </ScrollProvider>
     </CryptoProvider>
 
   </>
