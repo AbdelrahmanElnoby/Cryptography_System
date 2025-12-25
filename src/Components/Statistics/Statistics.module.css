@@ -141,6 +141,41 @@
   letter-spacing: -0.01em;
 }
 
+.detailsGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+  padding: 2rem;
+  background: var(--black);
+  border-radius: 1rem;
+  border: 2px solid var(--gray-medium);
+}
+
+.detailItem {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  font-size: 1.125rem;
+}
+
+.detailLabel {
+  font-weight: 700;
+  color: var(--text-secondary);
+  min-width: 140px;
+  text-transform: uppercase;
+  font-size: 0.875rem;
+  letter-spacing: 0.05em;
+}
+
+.detailValue {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: -0.01em;
+}
+
 .infoGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
