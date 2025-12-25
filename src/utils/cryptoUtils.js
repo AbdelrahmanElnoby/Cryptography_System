@@ -192,6 +192,177 @@ export const calculateEntropy = (text) => {
   return entropy;
 };
 
+// DES Cipher (using crypto-js - imported in component)
+// Note: These functions expect CryptoJS to be passed from the component
+export const desEncrypt = (text, key, CryptoJS) => {
+  if (!key || key.length < 8) {
+    throw new Error('DES requires a key of at least 8 characters');
+  }
+  if (!CryptoJS) {
+    throw new Error('CryptoJS library is required for DES encryption');
+  }
+  try {
+    return CryptoJS.DES.encrypt(text, key).toString();
+  } catch (error) {
+    throw new Error('DES encryption failed: ' + error.message);
+  }
+};
+
+export const desDecrypt = (text, key, CryptoJS) => {
+  if (!key || key.length < 8) {
+    throw new Error('DES requires a key of at least 8 characters');
+  }
+  if (!CryptoJS) {
+    throw new Error('CryptoJS library is required for DES decryption');
+  }
+  try {
+    const decrypted = CryptoJS.DES.decrypt(text, key);
+    const result = decrypted.toString(CryptoJS.enc.Utf8);
+    if (!result) {
+      throw new Error('Decryption failed - invalid key or ciphertext');
+    }
+    return result;
+  } catch (error) {
+    throw new Error('DES decryption failed: ' + error.message);
+  }
+};
+
+// Playfair Cipher
+const generatePlayfairKey = (key) => {
+  const keyUpper = key.toUpperCase().replace(/[^A-Z]/g, '').replace(/J/g, 'I');
+  const keySet = new Set();
+  const keyMatrix = [];
+  
+  // Add key characters
+  for (let char of keyUpper) {
+    if (!keySet.has(char)) {
+      keySet.add(char);
+      keyMatrix.push(char);
+    }
+  }
+  
+  // Add remaining alphabet (I and J are treated as same)
+  for (let i = 65; i <= 90; i++) {
+    const char = String.fromCharCode(i);
+    if (char !== 'J' && !keySet.has(char)) {
+      keyMatrix.push(char);
+    }
+  }
+  
+  // Create 5x5 matrix
+  const matrix = [];
+  for (let i = 0; i < 5; i++) {
+    matrix.push(keyMatrix.slice(i * 5, (i + 1) * 5));
+  }
+  
+  return matrix;
+};
+
+const findInMatrix = (matrix, char) => {
+  for (let i = 0; i < 5; i++) {
+    for (let j = 0; j < 5; j++) {
+      if (matrix[i][j] === char) {
+        return [i, j];
+      }
+    }
+  }
+  return null;
+};
+
+const prepareText = (text) => {
+  let prepared = text.toUpperCase().replace(/[^A-Z]/g, '').replace(/J/g, 'I');
+  const pairs = [];
+  
+  for (let i = 0; i < prepared.length; i += 2) {
+    if (i + 1 < prepared.length) {
+      if (prepared[i] === prepared[i + 1]) {
+        pairs.push([prepared[i], 'X']);
+        i--;
+      } else {
+        pairs.push([prepared[i], prepared[i + 1]]);
+      }
+    } else {
+      pairs.push([prepared[i], 'X']);
+    }
+  }
+  
+  return pairs;
+};
+
+export const playfairEncrypt = (text, key) => {
+  if (!key || key.length === 0) {
+    throw new Error('Playfair cipher requires a key');
+  }
+  
+  const matrix = generatePlayfairKey(key);
+  const pairs = prepareText(text);
+  let result = '';
+  
+  for (let [char1, char2] of pairs) {
+    const pos1 = findInMatrix(matrix, char1);
+    const pos2 = findInMatrix(matrix, char2);
+    
+    if (!pos1 || !pos2) continue;
+    
+    let [r1, c1] = pos1;
+    let [r2, c2] = pos2;
+    
+    if (r1 === r2) {
+      // Same row
+      c1 = (c1 + 1) % 5;
+      c2 = (c2 + 1) % 5;
+    } else if (c1 === c2) {
+      // Same column
+      r1 = (r1 + 1) % 5;
+      r2 = (r2 + 1) % 5;
+    } else {
+      // Rectangle
+      [c1, c2] = [c2, c1];
+    }
+    
+    result += matrix[r1][c1] + matrix[r2][c2];
+  }
+  
+  return result;
+};
+
+export const playfairDecrypt = (text, key) => {
+  if (!key || key.length === 0) {
+    throw new Error('Playfair cipher requires a key');
+  }
+  
+  const matrix = generatePlayfairKey(key);
+  const pairs = prepareText(text);
+  let result = '';
+  
+  for (let [char1, char2] of pairs) {
+    const pos1 = findInMatrix(matrix, char1);
+    const pos2 = findInMatrix(matrix, char2);
+    
+    if (!pos1 || !pos2) continue;
+    
+    let [r1, c1] = pos1;
+    let [r2, c2] = pos2;
+    
+    if (r1 === r2) {
+      // Same row
+      c1 = (c1 - 1 + 5) % 5;
+      c2 = (c2 - 1 + 5) % 5;
+    } else if (c1 === c2) {
+      // Same column
+      r1 = (r1 - 1 + 5) % 5;
+      r2 = (r2 - 1 + 5) % 5;
+    } else {
+      // Rectangle
+      [c1, c2] = [c2, c1];
+    }
+    
+    result += matrix[r1][c1] + matrix[r2][c2];
+  }
+  
+  return result;
+};
+
 // Avalanche effect calculation
 export const calculateAvalanche = (originalText, encrypted1, encrypted2) => {
   if (encrypted1.length !== encrypted2.length) return 0;
@@ -205,4 +376,6 @@ export const calculateAvalanche = (originalText, encrypted1, encrypted2) => {
   
   return (differences / encrypted1.length) * 100;
 };
+
+
 

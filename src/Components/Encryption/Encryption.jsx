@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import CryptoJS from 'crypto-js';
 import { useCrypto } from '../../context/CryptoContext';
 import {
   caesarEncrypt,
@@ -6,7 +7,11 @@ import {
   hillEncrypt,
   hillDecrypt,
   vigenereEncrypt,
-  vigenereDecrypt
+  vigenereDecrypt,
+  desEncrypt,
+  desDecrypt,
+  playfairEncrypt,
+  playfairDecrypt
 } from '../../utils/cryptoUtils';
 import styles from './Encryption.module.css';
 
@@ -36,28 +41,86 @@ const Encryption = () => {
       idea: 'Uses a word to apply multiple Caesar shifts.',
       keyLabel: 'Key: LETTERS only',
       keyPlaceholder: 'KEY'
+    },
+    DES: {
+      type: 'Modern Cipher',
+      idea: 'Data Encryption Standard - symmetric block cipher.',
+      keyLabel: 'Key: At least 8 characters',
+      keyPlaceholder: 'mysecretkey'
+    },
+    Playfair: {
+      type: 'Classical Cipher',
+      idea: 'Uses a 5x5 matrix for digraph substitution.',
+      keyLabel: 'Key: WORD or PHRASE',
+      keyPlaceholder: 'MONARCHY'
     }
+  };
+
+  const validateInput = () => {
+    if (!plaintext || plaintext.trim().length === 0) {
+      setError('Please enter a plaintext message');
+      return false;
+    }
+
+    if (!key || key.trim().length === 0) {
+      setError('Please enter an encryption key');
+      return false;
+    }
+
+    return true;
   };
 
   const handleEncrypt = () => {
     try {
       setError('');
+      
+      if (!validateInput()) {
+        return;
+      }
+
       let result = '';
-      let input = plaintext;
+      let input = plaintext.trim();
 
       switch (cipher) {
         case 'Caesar':
-          if (!key || isNaN(key)) {
+          if (!key || isNaN(key) || key.trim() === '') {
             setError('Caesar cipher requires a NUMBER key');
             return;
           }
-          result = caesarEncrypt(input, parseInt(key));
+          const caesarKey = parseInt(key);
+          if (caesarKey < 0 || caesarKey > 25) {
+            setError('Caesar cipher key must be between 0 and 25');
+            return;
+          }
+          result = caesarEncrypt(input, caesarKey);
           break;
         case 'Hill':
+          if (!key || key.trim().split(/\s+/).length !== 4) {
+            setError('Hill cipher requires exactly 4 numbers separated by spaces');
+            return;
+          }
           result = hillEncrypt(input, key);
           break;
         case 'Vigenere':
+          if (!/^[a-zA-Z]+$/.test(key)) {
+            setError('Vigenere cipher requires LETTERS only in the key');
+            return;
+          }
           result = vigenereEncrypt(input, key);
+          break;
+        case 'DES':
+          if (key.length < 8) {
+            setError('DES requires a key of at least 8 characters');
+            return;
+          }
+          result = desEncrypt(input, key, CryptoJS);
+          break;
+        case 'Playfair':
+          if (!key || key.trim().length === 0) {
+            setError('Playfair cipher requires a key');
+            return;
+          }
+          result = playfairEncrypt(input, key);
           break;
         default:
           return;
@@ -71,29 +134,67 @@ const Encryption = () => {
         output: result
       });
     } catch (err) {
-      setError(err.message);
+      setError(err.message || 'Encryption failed. Please check your inputs.');
     }
   };
 
   const handleDecrypt = () => {
     try {
       setError('');
+      
+      const input = ciphertext || plaintext;
+      if (!input || input.trim().length === 0) {
+        setError('Please enter ciphertext to decrypt');
+        return;
+      }
+
+      if (!key || key.trim().length === 0) {
+        setError('Please enter a decryption key');
+        return;
+      }
+
       let result = '';
-      let input = ciphertext || plaintext;
 
       switch (cipher) {
         case 'Caesar':
-          if (!key || isNaN(key)) {
+          if (!key || isNaN(key) || key.trim() === '') {
             setError('Caesar cipher requires a NUMBER key');
             return;
           }
-          result = caesarDecrypt(input, parseInt(key));
+          const caesarKey = parseInt(key);
+          if (caesarKey < 0 || caesarKey > 25) {
+            setError('Caesar cipher key must be between 0 and 25');
+            return;
+          }
+          result = caesarDecrypt(input.trim(), caesarKey);
           break;
         case 'Hill':
-          result = hillDecrypt(input, key);
+          if (!key || key.trim().split(/\s+/).length !== 4) {
+            setError('Hill cipher requires exactly 4 numbers separated by spaces');
+            return;
+          }
+          result = hillDecrypt(input.trim(), key);
           break;
         case 'Vigenere':
-          result = vigenereDecrypt(input, key);
+          if (!/^[a-zA-Z]+$/.test(key)) {
+            setError('Vigenere cipher requires LETTERS only in the key');
+            return;
+          }
+          result = vigenereDecrypt(input.trim(), key);
+          break;
+        case 'DES':
+          if (key.length < 8) {
+            setError('DES requires a key of at least 8 characters');
+            return;
+          }
+          result = desDecrypt(input.trim(), key, CryptoJS);
+          break;
+        case 'Playfair':
+          if (!key || key.trim().length === 0) {
+            setError('Playfair cipher requires a key');
+            return;
+          }
+          result = playfairDecrypt(input.trim(), key);
           break;
         default:
           return;
@@ -107,7 +208,7 @@ const Encryption = () => {
         output: result
       });
     } catch (err) {
-      setError(err.message);
+      setError(err.message || 'Decryption failed. Please check your inputs and key.');
     }
   };
 
@@ -157,6 +258,8 @@ const Encryption = () => {
             <option value="Caesar">Caesar Cipher</option>
             <option value="Hill">Hill Cipher</option>
             <option value="Vigenere">Vigenère Cipher</option>
+            <option value="DES">DES Cipher</option>
+            <option value="Playfair">Playfair Cipher</option>
           </select>
         </div>
 

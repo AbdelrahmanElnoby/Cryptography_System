@@ -1,0 +1,616 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+  min-height: calc(100vh - 80px);
+  background: var(--black);
+  position: relative;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 4rem;
+  padding-top: 1rem;
+  position: relative;
+  z-index: 1;
+  animation: fadeInDown 0.6s ease-out;
+}
+
+.headerIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 5rem;
+  height: 5rem;
+  background: var(--black-light);
+  border: 3px solid var(--neon-red);
+  border-radius: 1.25rem;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow-neon);
+  position: relative;
+}
+
+.headerIcon::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 1.25rem;
+  border: 2px solid var(--neon-red);
+  opacity: 0.3;
+  animation: pulse-ring 2s ease-in-out infinite;
+}
+
+.headerIcon i {
+  font-size: 2.25rem;
+  color: var(--neon-red);
+  text-shadow: 0 0 20px var(--neon-red-glow);
+  position: relative;
+  z-index: 1;
+}
+
+.header h1 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  color: var(--text-secondary);
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 3.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.section {
+  background: var(--black-light);
+  border-radius: 1.5rem;
+  padding: 3rem;
+  border: 2px solid var(--gray-medium);
+  box-shadow: var(--shadow-xl);
+  transition: all var(--transition-base);
+  position: relative;
+  overflow: hidden;
+  animation: fadeInUp 0.6s ease-out;
+  animation-fill-mode: both;
+}
+
+.section:nth-child(1) { animation-delay: 0.1s; }
+.section:nth-child(2) { animation-delay: 0.2s; }
+.section:nth-child(3) { animation-delay: 0.3s; }
+.section:nth-child(4) { animation-delay: 0.4s; }
+.section:nth-child(5) { animation-delay: 0.5s; }
+.section:nth-child(6) { animation-delay: 0.6s; }
+
+.section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--gradient-primary);
+  transform: scaleX(0);
+  transition: transform var(--transition-base);
+}
+
+.section:hover::before {
+  transform: scaleX(1);
+}
+
+.section:hover {
+  border-color: var(--neon-red);
+  box-shadow: var(--shadow-xl), var(--shadow-neon);
+}
+
+.sectionTitle {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid var(--gray-medium);
+  position: relative;
+  letter-spacing: -0.01em;
+}
+
+.sectionTitle::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 80px;
+  height: 2px;
+  background: var(--gradient-primary);
+  border-radius: 2px;
+}
+
+.sectionTitle i {
+  color: var(--neon-red);
+  text-shadow: 0 0 15px var(--neon-red-glow);
+  font-size: 1.75rem;
+}
+
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.step {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+  padding: 2rem;
+  background: var(--black);
+  border: 2px solid var(--gray-medium);
+  border-radius: 1.25rem;
+  transition: all var(--transition-base);
+  position: relative;
+  overflow: hidden;
+}
+
+.step::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 100%;
+  background: var(--gradient-primary);
+  transform: scaleY(0);
+  transition: transform var(--transition-base);
+}
+
+.step:hover::before {
+  transform: scaleY(1);
+}
+
+.step:hover {
+  border-color: var(--neon-red);
+  box-shadow: 0 0 25px rgba(255, 7, 58, 0.2);
+  transform: translateX(5px);
+}
+
+.stepNumber {
+  width: 3.5rem;
+  height: 3.5rem;
+  background: var(--black-light);
+  border: 3px solid var(--neon-red);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--neon-red);
+  text-shadow: 0 0 15px var(--neon-red-glow);
+  flex-shrink: 0;
+  box-shadow: var(--shadow-neon);
+  transition: all var(--transition-base);
+}
+
+.step:hover .stepNumber {
+  transform: scale(1.1) rotate(5deg);
+  box-shadow: var(--shadow-neon-strong);
+}
+
+.stepContent h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.01em;
+}
+
+.stepContent p {
+  font-size: 1.0625rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.instructions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.instructionCard {
+  background: var(--black);
+  border: 2px solid var(--gray-medium);
+  border-radius: 1.25rem;
+  padding: 2rem;
+  transition: all var(--transition-base);
+  position: relative;
+  overflow: hidden;
+}
+
+.instructionCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--gradient-primary);
+  transform: scaleX(0);
+  transition: transform var(--transition-base);
+}
+
+.instructionCard:hover::before {
+  transform: scaleX(1);
+}
+
+.instructionCard:hover {
+  border-color: var(--neon-red);
+  box-shadow: 0 0 30px rgba(255, 7, 58, 0.3);
+  transform: translateY(-5px);
+}
+
+.instructionCard h3 {
+  font-size: 1.375rem;
+  font-weight: 800;
+  color: var(--neon-red);
+  margin-bottom: 1.25rem;
+  text-shadow: 0 0 10px var(--neon-red-glow);
+  letter-spacing: -0.01em;
+}
+
+.instructionCard ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.instructionCard li {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.8;
+  padding-left: 2rem;
+  position: relative;
+  margin-bottom: 0.75rem;
+}
+
+.instructionCard li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--neon-red);
+  text-shadow: 0 0 10px var(--neon-red-glow);
+  font-weight: 700;
+  font-size: 1.125rem;
+}
+
+.textContent {
+  color: var(--text-secondary);
+  line-height: 1.8;
+  font-size: 1.0625rem;
+}
+
+.textContent p {
+  margin-bottom: 1.25rem;
+}
+
+.featureList {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0;
+}
+
+.featureList li {
+  padding: 1rem 0;
+  padding-left: 2.5rem;
+  position: relative;
+  color: var(--text-secondary);
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  border-bottom: 1px solid var(--gray-medium);
+}
+
+.featureList li:last-child {
+  border-bottom: none;
+}
+
+.featureList li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--neon-red);
+  font-weight: 800;
+  text-shadow: 0 0 10px var(--neon-red-glow);
+  font-size: 1.25rem;
+}
+
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.metric {
+  background: var(--black);
+  border: 2px solid var(--gray-medium);
+  border-radius: 1.25rem;
+  padding: 2rem;
+  transition: all var(--transition-base);
+  position: relative;
+  overflow: hidden;
+}
+
+.metric::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--gradient-primary);
+  transform: scaleX(0);
+  transition: transform var(--transition-base);
+}
+
+.metric:hover::before {
+  transform: scaleX(1);
+}
+
+.metric:hover {
+  border-color: var(--neon-red);
+  box-shadow: 0 0 25px rgba(255, 7, 58, 0.2);
+  transform: translateY(-3px);
+}
+
+.metric h4 {
+  font-size: 1.375rem;
+  font-weight: 800;
+  color: var(--neon-red);
+  margin-bottom: 1rem;
+  text-shadow: 0 0 10px var(--neon-red-glow);
+  letter-spacing: -0.01em;
+}
+
+.metric p {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.processList {
+  list-style: none;
+  padding: 0;
+  margin: 2rem 0;
+  counter-reset: step-counter;
+}
+
+.processList li {
+  counter-increment: step-counter;
+  padding: 1.5rem 0 1.5rem 4rem;
+  position: relative;
+  color: var(--text-secondary);
+  line-height: 1.8;
+  border-bottom: 2px solid var(--gray-medium);
+  font-size: 1.0625rem;
+  transition: all var(--transition-base);
+}
+
+.processList li:last-child {
+  border-bottom: none;
+}
+
+.processList li:hover {
+  color: var(--text-primary);
+  padding-left: 4.5rem;
+}
+
+.processList li::before {
+  content: counter(step-counter);
+  position: absolute;
+  left: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: var(--black-light);
+  border: 3px solid var(--neon-red);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  color: var(--neon-red);
+  text-shadow: 0 0 10px var(--neon-red-glow);
+  box-shadow: var(--shadow-neon);
+  transition: all var(--transition-base);
+}
+
+.processList li:hover::before {
+  transform: scale(1.1) rotate(5deg);
+  box-shadow: var(--shadow-neon-strong);
+}
+
+.tips {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.tip {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+  padding: 2rem;
+  background: var(--black);
+  border: 2px solid var(--gray-medium);
+  border-radius: 1.25rem;
+  transition: all var(--transition-base);
+  position: relative;
+  overflow: hidden;
+}
+
+.tip::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 100%;
+  background: var(--gradient-primary);
+  transform: scaleY(0);
+  transition: transform var(--transition-base);
+}
+
+.tip:hover::before {
+  transform: scaleY(1);
+}
+
+.tip:hover {
+  border-color: var(--neon-red);
+  box-shadow: 0 0 25px rgba(255, 7, 58, 0.2);
+  transform: translateX(5px);
+}
+
+.tip i {
+  font-size: 1.75rem;
+  color: var(--neon-red);
+  text-shadow: 0 0 15px var(--neon-red-glow);
+  flex-shrink: 0;
+  margin-top: 0.25rem;
+}
+
+.tip h4 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.625rem;
+  letter-spacing: -0.01em;
+}
+
+.tip p {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.cta {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: var(--black-light);
+  border: 3px solid var(--neon-red);
+  border-radius: 1.5rem;
+  box-shadow: var(--shadow-neon-strong);
+  margin-top: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--gradient-primary);
+}
+
+.cta h3 {
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+  text-shadow: 0 0 20px var(--neon-red-glow);
+  letter-spacing: -0.02em;
+}
+
+.cta p {
+  font-size: clamp(1.125rem, 2vw, 1.375rem);
+  color: var(--text-secondary);
+  margin-bottom: 2.5rem;
+  line-height: 1.7;
+}
+
+.ctaButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.875rem;
+  padding: 1.375rem 3.5rem;
+  font-size: 1.125rem;
+  font-weight: 700;
+  background: var(--gradient-primary);
+  color: var(--black);
+  border: 2px solid var(--neon-red);
+  border-radius: 0.875rem;
+  text-decoration: none;
+  transition: all var(--transition-base);
+  box-shadow: var(--shadow-neon-strong);
+  position: relative;
+  overflow: hidden;
+}
+
+.ctaButton::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.ctaButton:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+.ctaButton:hover {
+  background: var(--neon-red-bright);
+  box-shadow: var(--shadow-neon-strong), 0 0 60px rgba(255, 7, 58, 0.5);
+  transform: translateY(-3px) scale(1.05);
+}
+
+.ctaButton i,
+.ctaButton span {
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 2rem 1rem;
+  }
+
+  .header h1 {
+    font-size: 2rem;
+  }
+
+  .section {
+    padding: 2rem;
+  }
+
+  .step {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .instructions,
+  .tips,
+  .metrics {
+    grid-template-columns: 1fr;
+  }
+}
